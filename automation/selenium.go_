@@ -76,7 +76,7 @@ func scrap() {
 	// Remove the boilerplate code already in the text box.
 	for _, val := range elems {
 		text, err := val.GetAttribute("innerHTML")
-		fmt.Println("sdfsdfsdfsdf", text, err)
+		fmt.Println("test", text, err)
 	}
 
 	time.Sleep(10 * time.Second)

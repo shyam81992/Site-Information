@@ -20,8 +20,6 @@ func TestCreateCity(t *testing.T) {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 
-	os.Setenv("integration_testing", "true")
-
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
@@ -30,7 +28,7 @@ func TestCreateCity(t *testing.T) {
 
 	siteInfoController := &controllers.SiteInfoCtl{Scrap: mockScrapper}
 
-	if os.Getenv("integration_testing") == "true" {
+	if os.Getenv("INTEGRATION_TESTING") == "true" {
 
 		siteInfoController = &controllers.SiteInfoCtl{Scrap: &scrap.Scrapper{}}
 	}
@@ -77,7 +75,7 @@ func TestCreateCity(t *testing.T) {
 			reqBody, err := json.Marshal(test.input)
 			assert.NoError(t, err)
 
-			if os.Getenv("integration_testing") != "true" {
+			if os.Getenv("INTEGRATION_TESTING") != "true" {
 				test.buildStubs(mockScrapper)
 			}
 

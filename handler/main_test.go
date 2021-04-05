@@ -7,9 +7,7 @@ import (
 
 func TestMain(t *testing.M) {
 	exitVal := t.Run()
-	os.Setenv("integration_testing", "true")
-
-	if os.Getenv("integration_testing") == "true" {
+	if os.Getenv("INTEGRATION_TESTING") == "true" {
 		//config.LoadConfig()
 	}
 	os.Exit(exitVal)

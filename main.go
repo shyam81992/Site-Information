@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/shyam81992/Site-Information/camqp"
 	"github.com/shyam81992/Site-Information/config"
 	"github.com/shyam81992/Site-Information/controllers"
 	"github.com/shyam81992/Site-Information/handler"
@@ -12,9 +13,9 @@ func main() {
 
 	config.LoadConfig()
 
-	//campq := camqp.CAMQP{}
+	campq := camqp.CAMQP{}
 
-	siteInfoController := controllers.NewSiteInfoController(&scrapper.Scrapper{})
+	siteInfoController := controllers.NewSiteInfoController(&scrapper.Scrapper{}, &campq)
 	controllers.Init(&controllers.Config{
 		SiteInfoController: siteInfoController,
 	})

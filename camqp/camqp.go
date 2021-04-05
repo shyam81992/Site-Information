@@ -7,7 +7,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-//go:generate mockgen -destination=./mock/camqp.go -package=mock github.com/shyam81992/Site-Information/camqp CAMQPinterface,CAMQPConninterface,CAMQPChannelinterface
+//go:generate mockgen -destination=./mock/camqp.go -package=mock github.com/shyam81992/Site-Information/camqp ICAMQP,ICAMQPConn,ICAMQPChannel
 
 type CAMQP struct {
 }
@@ -40,14 +40,14 @@ func (a *CAMQP) Publishmsg(msg []byte) {
 	}
 }
 
-func (a *CAMQP) Dial(url string) (CAMQPConninterface, error) {
+func (a *CAMQP) Dial(url string) (ICAMQPConn, error) {
 	var ch CAMQPConn
 	var err error
 	ch.Connection, err = amqp.Dial(url)
 	return &ch, err
 }
 
-type CAMQPinterface interface {
+type ICAMQP interface {
 	Publishmsg([]byte)
 }
 
@@ -59,16 +59,16 @@ func (conn *CAMQPConn) Close() error {
 	return conn.Connection.Close()
 }
 
-func (conn *CAMQPConn) Channel() (CAMQPChannelinterface, error) {
+func (conn *CAMQPConn) Channel() (ICAMQPChannel, error) {
 	return conn.Connection.Channel()
 }
 
-type CAMQPConninterface interface {
+type ICAMQPConn interface {
 	Close() error
-	Channel() (CAMQPChannelinterface, error)
+	Channel() (ICAMQPChannel, error)
 }
 
-type CAMQPChannelinterface interface {
+type ICAMQPChannel interface {
 	Close() error
 	Publish(string, string, bool, bool, amqp.Publishing) error
 }

@@ -1,0 +1,83 @@
+package automation
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/tebeka/selenium"
+	"github.com/tebeka/selenium/chrome"
+)
+
+// This example shows how to navigate to a http://play.golang.org page, input a
+// short program, run it, and inspect its output.
+//
+// If you want to actually run this example:
+//
+//   1. Ensure the file paths at the top of the function are correct.
+//   2. Remove the word "Example" from the comment at the bottom of the
+//      function.
+//   3. Run:
+//      go test -test.run=Example$ github.com/tebeka/selenium
+func scrap() {
+	// Start a Selenium WebDriver server instance (if one is not already
+	// running).
+	const (
+		// These paths will be different on your system.
+		seleniumPath     = "./jar_files/selenium-server-standalone-3.141.59.jar"
+		chromeDriverPath = "./chromedriver/chromedriver.exe"
+		port             = 8080
+	)
+	opts := []selenium.ServiceOption{
+		//selenium.StartFrameBuffer(),             // Start an X frame buffer for the browser to run in.
+		selenium.ChromeDriver(chromeDriverPath), // Specify the path to GeckoDriver in order to use Firefox.
+		//selenium.Output(os.Stderr),              // Output debug information to STDERR.
+	}
+	selenium.SetDebug(true)
+	service, err := selenium.NewSeleniumService(seleniumPath, port, opts...)
+	if err != nil {
+		fmt.Println(err)
+		panic(err) // panic is used only as an example and is not otherwise recommended.
+	}
+	defer service.Stop()
+	ops := make(map[string]interface{})
+	sobj := make(map[string]string)
+	sobj["de"] = "en"
+	ops["translate_whitelists"] = sobj
+	sobj = make(map[string]string)
+	sobj["enabled"] = "true"
+	ops["translate"] = sobj
+
+	// Connect to the WebDriver instance running locally.
+	caps := selenium.Capabilities{"browserName": "chrome"}
+	caps.AddChrome(chrome.Capabilities{
+		Prefs: ops,
+	})
+	wd, err := selenium.NewRemote(caps, fmt.Sprintf("http://localhost:%d/wd/hub", port))
+	if err != nil {
+		panic(err)
+	}
+	defer wd.Quit()
+
+	// Navigate to the simple playground interface.
+	if err := wd.Get("https://www.home24.de"); err != nil {
+		panic(err)
+	}
+
+	time.Sleep(14 * time.Second)
+	// wd.WaitWithTimeout(func(wd selenium.WebDriver) (bool, error) {
+	// 	wd.ExecuteScript()
+	// }, 5*time.Second)
+	// Get a reference to the text box containing code.
+	elems, err := wd.FindElements(selenium.ByXPATH, "//button[@class='css-4id5mj']")
+	if err != nil {
+		panic(err)
+	}
+
+	// Remove the boilerplate code already in the text box.
+	for _, val := range elems {
+		text, err := val.GetAttribute("innerHTML")
+		fmt.Println("sdfsdfsdfsdf", text, err)
+	}
+
+	time.Sleep(10 * time.Second)
+}

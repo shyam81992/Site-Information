@@ -14,7 +14,7 @@ Steps to run the project
     
     3. To run the testcases run the command . ../config/dev.sh && go test ./... -v
 
-Note: If you are running on windows please install git bash so that you can able to run the shell script  ". config/dev.sh"
+Note: If you are using windows please install git bash so that you can run the shell script  ". config/dev.sh"
 
 
 Post /static/siteinfo -b {url : "string"} 
@@ -32,18 +32,18 @@ Post /dynamic/siteinfo -b {url : "string", email : "string"}  status 200
 response {"message" : "ok"}
 
 /dynamic/siteinfo follows async model.
-To scrap the dynamic page we need to use chromdp or go-selenium and both the packages
+To scrap the dynamic page we need to use chromedp or go-selenium and both the packages
 will be using chrome in background (Due to this memory utiliztion will be high if the 
-no of requests go on increasing.).
+number of requests increases).
 
 Site-Information-job (Work in progess)
-Used to scrap the dynamic page using chromdp or go-selenium and notify the website information to the user through email.
+Used to scrap the dynamic page using chromedp or go-selenium and notify the website information to the user through email.
 
 Sample selenium code under automation/selenium.go_
 
-go-selinium supports language translation where chromedp doesn't. 
+go-selenium supports language translation where chromedp doesn't. 
 
 Area of Improvement:
-Need verify that go-selenium is stable. If not then we need to use chromdp + Internationalization.
+Need to verify if go-selenium language translation is stable. If not then we need to use chromdp + Internationalization.
 
 

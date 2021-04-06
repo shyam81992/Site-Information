@@ -79,6 +79,7 @@ func (s *Scrapper) GetPageInfo(URL string) gin.H {
 		if e.Request.URL.String() == URL {
 			e.ForEach("a[href]", func(i int, e *colly.HTMLElement) {
 
+				// mutex is not requiered because code execution here is synchronous
 				if linkregex.MatchString(e.Attr("href")) {
 					fmt.Println("matched", e.Attr("href"))
 					internalLinks++

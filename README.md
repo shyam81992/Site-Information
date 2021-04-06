@@ -31,12 +31,10 @@ response {
 Post /dynamic/siteinfo -b {url : "string", email : "string"}  status 200 
 response {"message" : "ok"}
 
-/dynamic/siteinfo follows async model.
-To scrap the dynamic page we need to use chromedp or go-selenium and both the packages
-will be using chrome in background (Due to this memory utiliztion will be high if the 
-number of requests increases).
+/dynamic/siteinfo 
+Follows async model. Since to scrap the dynamic page we need to use chromedp or go-selenium and both the packages will be using chrome in background (If we implement this logic in the Site-Information service, we might face performace issues when the number of requests increases). A seperate microservice is created for this (Site-Information-Job).
 
-Site-Information-job (Work in progess)
+Site-Information-Job (Work in progess)
 Used to scrap the dynamic page using chromedp or go-selenium and notify the website information to the user through email.
 
 Sample selenium code under automation/selenium.go_

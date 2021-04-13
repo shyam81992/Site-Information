@@ -42,6 +42,6 @@ Sample selenium code under automation/selenium.go_
 go-selenium supports language translation where chromedp doesn't. 
 
 Area of Improvement:
-Need to verify if go-selenium language translation is stable. If not then we need to use chromdp + Internationalization.
+Need to verify if go-selenium language translation is stable. If not then we need to use chromdp + Internationalization or chromdp + third party api which tranlates (ex google translate or deepL).
 
 

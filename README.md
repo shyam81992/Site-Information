@@ -10,9 +10,12 @@ Docker for Mac/Windows
 Steps to run the project 
 
     1. Create a base folder and clone the projects github.com/shyam81992/Site-Information.
-    2. Run go mod tidy to install the dependencies.
+
+    2. Open a new terminal and go to the folder base_folder/Site-Information/rabbitmq and run the command docker-compose up (To start the Rabbitmq).
+
+    3. Run go mod tidy to install the dependencies.
     
-    3. To run the testcases run the command . ../config/dev.sh && go test ./... -v
+    4. To run the testcases run the command . ../config/dev.sh && go test ./... -v
 
 Note: If you are using windows please install git bash so that you can run the shell script  ". config/dev.sh"
 
